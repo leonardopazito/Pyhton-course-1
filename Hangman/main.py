@@ -8,18 +8,37 @@ word_list = hangman_words.word_list
 
 chosen_word = random.choice(word_list)
 chosen_word_list = [letter for letter in chosen_word]
-lives = 6
-actual_live = lives
+LIVES = 6
+actual_live = LIVES
 wrong_letters = ''
 
 # Logo
 print(logo)
 
-# Testing code
+# Exclude this line in the final project
 print(f"Test: The solution is {chosen_word}")
 
 # Create blanks
 display = ["_" for letter in chosen_word]
+
+
+def update_lives(display_: list[str], letter: str, lives: int) -> None:
+    """It updates the numbers of lives remaining
+
+    Args:
+        display (str): Actual display that will be analyzed
+        letter (str): Chosen letter
+        lives (int): Actual number of lives
+    """
+    global actual_live, wrong_letters
+    if letter not in display_:
+        actual_live -= 1
+        if actual_live < LIVES - 1:
+            wrong_letters += ", "+letter
+        elif actual_live == LIVES - 1:
+            wrong_letters += letter
+        else:
+            wrong_letters = wrong_letters
 
 
 guess = input('Guess a letter: ').lower()
@@ -27,18 +46,11 @@ while (not display == chosen_word_list) and (actual_live >= 0):
 
     # Check guessed letter
     word_lenght = len(chosen_word)
-    for position in range(word_lenght):
-        if guess == chosen_word[position]:
-            display[position] = guess
+    display = [guess if letter == guess
+               else display[position]
+               for position, letter in enumerate(chosen_word)]
 
-    if guess not in display:
-        actual_live -= 1
-        if actual_live < lives - 1:
-            wrong_letters += ", "+guess
-        elif actual_live == lives - 1:
-            wrong_letters += guess
-        else:
-            wrong_letters = wrong_letters
+    update_lives(display, guess, actual_live)
 
     if actual_live == -1:
         print('You lose!')
