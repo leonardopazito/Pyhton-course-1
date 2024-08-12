@@ -1,5 +1,5 @@
 # Password Generator Project
-# You can't use random.choice
+
 import random
 import data
 
