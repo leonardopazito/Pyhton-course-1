@@ -15,9 +15,6 @@ wrong_letters = ''
 # Logo
 print(logo)
 
-# Exclude this line in the final project
-print(f"Test: The solution is {chosen_word}")
-
 # Create blanks
 display = ["_" for letter in chosen_word]
 
